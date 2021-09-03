@@ -18,7 +18,7 @@ This code is the Robomaster 2020 infantry armor recognition algorithm of Jilin U
 * [1. Functions](#1Functions)
 * [2. Performance](#2Performance)
 * [3. Environment](#3Environment)
-* [4. Configuration and Debugging](#4Configuration and Debugging)
+* [4. Configuration and Debugging](#4Configuration-and-Debugging)
 * [5. 整体框架](#5整体框架)
 * [6. 实现方案](#6实现方案)
 * [7. 总结展望](#7总结展望)
