@@ -6,9 +6,9 @@
 
 ---
 ## 介绍  
-本代码是吉林大学TARS-GO战队Robomaster2020赛季步兵装甲板识别算法（全平台兼容版本），包含并优化了本战队机器人视觉算法（JLURoboVision）的**相机驱动**、**装甲板识别**、**角度解算**三大主要模块。 
+本代码是吉林大学TARS-GO战队Robomaster2020赛季步兵装甲板识别算法（全平台兼容版本），包含并优化了本战队机器人视觉算法（JLURoboVision）的**相机驱动**、**装甲板识别**、**角度解算**三大主要模块。
 
---- 
+---
 ## 主要特性
 1. 大幅优化了大恒相机驱动GxCamera，增强了代码封装性及可移植性，重新组织了代码格式，增强可读性及拓展性。
 2. 更改了使用的多线程库，由pthread更改为c++11标准的Thread库，突破原先只能在linux系统下运行的限制，实现全平台运行。
@@ -40,7 +40,7 @@
 <img src="https://gitee.com/qunshanhe/JLURoboVision/raw/master/Assets/B1.png" width = "600" alt="图2.1 装甲板识别"/>
 </div>  
 
- 
+
 <div align=center>**EnemyColor = RED; TargetNum = 2**</div>  
 <div align=center>
 <img src="https://gitee.com/qunshanhe/JLURoboVision/raw/master/Assets/R.png" width = "600" alt="图2.2 装甲板识别"/>
@@ -56,13 +56,13 @@
 <div align=center>**320\*240（峰值可达1400FPS）**</div>  
 <div align=center>
 <img src="https://gitee.com/qunshanhe/JLURoboVision/raw/master/Assets/armor320240.gif" width = "600" alt="图2.4 装甲板实时识别帧率"/>
-</div> 
+</div>
 
 
 装甲板数字识别采用SVM，通过装甲板位置信息裁剪二值化后的装甲板图像并透射变换，投入训练好的SVM模型中识别，**数字识别准确率可达98%**。  
 <div align=center>
 <img src="https://gitee.com/qunshanhe/JLURoboVision/raw/master/Assets/RealtimeArmor.gif" width = "600" alt="图2.5 装甲板数字识别"/>
-</div> 
+</div>
 
 ### 角度解算  
 角度解算方面使用了两种解算方法分距离挡位运行。第一档使用P4P算法，第二档使用小孔成像原理的PinHole算法。  
@@ -70,11 +70,11 @@
 使用标定板测试，角度解算计算的距离误差在10%以内，角度基本与实际吻合。  
 <div align=center>
 <img src="https://gitee.com/qunshanhe/JLURoboVision/raw/master/Assets/pos.jpg" width = "600" alt="图2.7 角度解算测试图"/>
-</div> 
+</div>
 <div align=center>
 <img src="https://gitee.com/qunshanhe/JLURoboVision/raw/master/Assets/angle_solver.gif" width = "600" alt="图2.7 角度解算测试图"/>
-</div> 
- 
+</div>
+
 ---
 ## 3.依赖环境
 ### 硬件设备
@@ -91,19 +91,19 @@
 |Library|OpenCV-3.4.10|
 |DRIVE|Galaxy SDK|
 ---
-## 4.配置与调试
-### 项目运行配置  
-1. Windows 10 
-	- 使用Visual Studio打开TarsGoVision.sln
+## 4.Configuration and Debugging
+### Project configuration requirement  
+1. Windows 10
+	- Use Visual Studio to open TarsGoVision.sln
 	- 配置项目属性表
-	- 链接OpenCV动态链接库 
+	- Link OpenCV link library
 2. Ubuntu 18
-	- 使用Qt Creator打开TarsGoVision-qt.pro
-	- 配置pro文件
-	- pro文件中链接安装OpenCV时编译生成的.so链接库
+	- Use Qt Creator to open TarsGoVision-qt.pro
+	- Configurate pro file
+	- Use the link in pro file to install OpenCV and compile to get .so link library
 
-### 代码调试TODO-List
-1. 修改对应的xml文件路径，如下YOUR_PATH_TO所指示，将该部分修改为本人电脑到该工程的绝对路径
+### Code debugging TODO-List
+1. CHange the corresponding directory of the .xml file, as YOUR_PATH_TO below shows. Change that part to the project's absolute path
 ```
 // File: Main/ArmorDetecting.cpp
 
@@ -113,7 +113,7 @@ detector.loadSVM("YOUR_PATH_TO/TarsGoVision/General/123svm.xml");
 //Set angle solver prop
 angleSolver.setCameraParam("YOUR_PATH_TO/TarsGoVision/General/camera_params.xml", 1);
 ```
-2. 修改相机SN号/索引号，如下YOUR_GALAXY_CAMERA_SN，将该部分修改为本人所使用大恒相机的SN号；或者将YOUR_GALAXY_CAMERA_INDEX修改为相机索引号。
+2. Change the camera's SN number/index number, as YOUR_GALAXY_CAMERA_SN below shows. Change that part to your SN number of the camera, or change YOUR_GALAXY_CAMERA_INDEX to your camera's index number.
 ```
 // File: Main/ImageUpdating.cpp
 
@@ -124,7 +124,7 @@ status = gxCam.openDeviceBySN("YOUR_GALAXY_CAMERA_SN");			//By SN
 //status = gxCam.openDeviceByIndex("YOUR_GALAXY_CAMERA_INDEX");	//By Index
 GX_VERIFY(status);
 ```
-3. 修改相机的ROI、曝光、增益、白平衡等参数
+3. Set camera's ROI, explosure, gain, white balance, and so on
 ```
 // File: Main/ImageUpdating.cpp
 
@@ -137,20 +137,21 @@ gxCam.setGainParam(0, false, 0, 10);				// Gain
 gxCam.setWhiteBalanceOn(true);						// WhiteBalance
 
 ```
-4. Debugging Tools设置
-具体设置可参考[Debugging Tools](### Debugging Tools)，设置文件为:
+4. Debugging Tools Setting
+The specific settings can be seen in [Debugging Tools](### Debugging Tools)，The setting file is:
 ```
 // File: Main/ArmorDetecting.cpp
 ```
-### 单独模块调试  
-可参考下列示例代码：  
-[JLUVision_Demos](https://gitee.com/qunshanhe/JLUVision_Demos)各示例程序代码库  
-[Armor_Demo](https://gitee.com/qunshanhe/JLUVision_Demos/tree/master/Armor_Demo)为装甲板识别模块演示程序，可在Linux(.pro)/Windows(.sln)运行。  
-[AngleSolver_Armor_GxCamera](https://gitee.com/qunshanhe/JLUVision_Demos/tree/master/Anglesolver_Armor_GxCamera_Demo)为大恒相机采图+装甲板+角度解算演示程序，需要连接大恒相机在Linux下运行。  
+### Debugging single module  
+The demo code is for reference：  
+[JLUVision_Demos](https://gitee.com/qunshanhe/JLUVision_Demos)  
+[Armor_Demo](https://gitee.com/qunshanhe/JLUVision_Demos/tree/master/Armor_Demo)Can be run in Linux(.pro)/Windows(.sln)  
+[AngleSolver_Armor_GxCamera](https://gitee.com/qunshanhe/JLUVision_Demos/tree/master/Anglesolver_Armor_GxCamera_Demo)DJI's programs for image acquisition and the angle solver of armors. Connection to a Daheng camera to Linux is needed.  
 ### Debugging Tools  
-代码还自定义了一套调试用的函数，将灯条、装甲板识别、角度解算等信息进行可视化输出，并可通过键盘控制部分识别参数，为代码的调试和优化带来便利。  
+There are customized functions in the code, visualizing the light, armor, and angle solver, and we can use the keyboard to control the parameters. It is convenient to use these functions to debug and optimize.
+
 ```
-//装甲板检测识别调试参数是否输出
+//装甲板检测识别调试参数是否输出 Armor recognization: isShown
 //param:
 //		1.showSrcImg_ON,		  是否展示原图
 //		2.bool showSrcBinary_ON,  是否展示二值图
@@ -164,7 +165,7 @@ detector.showDebugInfo(0, 0, 0, 1, 0, 0, 0);
 ```
 
 ```
-//角度解算调试参数是否输出
+//角度解算调试参数是否输出 Angle solver parameters: isShown
 //param:
 //		1.showCurrentResult,	  是否展示当前解算结果
 //		2.bool showTVec,          是否展示目标坐标
@@ -176,7 +177,7 @@ detector.showDebugInfo(0, 0, 0, 1, 0, 0, 0);
 angleSolver.showDebugInfo(1, 1, 1, 1, 1, 0);
 ```
 
---- 
+---
 ## 5.整体框架
 ### 文件树  
 ```
@@ -289,7 +290,7 @@ $$ s \begin{bmatrix} u \\ v \\ 1 \end{bmatrix} = \begin{bmatrix} f_x & 0 & c_x \
 由上述相机成像原理可得相机-物点的平移矩阵为：
 $$ tVec = \begin{bmatrix} t_x \\ t_y \\ t_z \end{bmatrix} $$  
 转角计算公式如下：  
-$$ \tan pitch = \frac{t_y}{\sqrt{{t_y}^2 + {t_z}^2}} $$ 
+$$ \tan pitch = \frac{t_y}{\sqrt{{t_y}^2 + {t_z}^2}} $$
 $$ \tan yaw = \frac{t_x}{t_z} $$
 
 2. 小孔成像原理  
@@ -355,7 +356,7 @@ bool armorCompare(const ArmorBox & a_armor, const ArmorBox & b_armor, const Armo
 	//number(robot type) priorty 设置a、b装甲板的分数
 	setNumScore(a_armor.armorNum, targetNum, a_score);
 	setNumScore(b_armor.armorNum, targetNum, b_score);
-	
+
 	if (lastArmor.armorNum != 0) {  //if lastArmor.armorRect is not a default armor means there is a true targetArmor in the last frame 上一帧图像中存在目标装甲板
 		float a_distance = getPointsDistance(a_armor.center, lastArmor.center); //distance score to the lastArmor(if exist) 装甲板距离得分，算负分
 		float b_distance = getPointsDistance(b_armor.center, lastArmor.center); //distance score to the lastArmor(if exist) 装甲板距离得分，算负分
