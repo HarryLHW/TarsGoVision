@@ -145,8 +145,8 @@ The specific settings can be seen in [Debugging Tools](### Debugging Tools)，Th
 ### Debugging single module  
 The demo code is for reference：  
 [JLUVision_Demos](https://gitee.com/qunshanhe/JLUVision_Demos)  
-[Armor_Demo](https://gitee.com/qunshanhe/JLUVision_Demos/tree/master/Armor_Demo)Can be run in Linux(.pro)/Windows(.sln)  
-[AngleSolver_Armor_GxCamera](https://gitee.com/qunshanhe/JLUVision_Demos/tree/master/Anglesolver_Armor_GxCamera_Demo)DJI's programs for image acquisition and the angle solver of armors. Connection to a Daheng camera to Linux is needed.  
+[Armor_Demo](https://gitee.com/qunshanhe/JLUVision_Demos/tree/master/Armor_Demo) can be run in Linux(.pro)/Windows(.sln)  
+[AngleSolver_Armor_GxCamera](https://gitee.com/qunshanhe/JLUVision_Demos/tree/master/Anglesolver_Armor_GxCamera_Demo) DJI's programs for image acquisition and the angle solver of armors. Connection to a Daheng camera to Linux is needed.  
 ### Debugging Tools  
 There are customized functions in the code, visualizing the light, armor, and angle solver, and we can use the keyboard to control the parameters. It is convenient to use these functions to debug and optimize.
 
