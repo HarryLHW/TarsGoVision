@@ -5,7 +5,7 @@
 First of all, I would like to say thank you to Southeast University's open-source code in 2018 and Shenzhen University and Shanghai Jiaotong University's open-source code in 2019 for their great help in the completion of this set of codes. I hope this set of codes can also help other teams to achieve greater improvement on the stage of RM.
 
 ---
-## Abstraction  
+## Abstract  
 This code is the Robomaster 2020 infantry armor recognition algorithm of Jilin University TARS-GO team (full platform compatible version). It contains and optimizes robot vision algorithm from JLURoboVision in three main modules: **camera driver**, **armor recognition** and **angle solver**.
 
 ---
@@ -78,14 +78,14 @@ Testing by calibration board, the distance error calculated by the angle solver 
 </div>
 
 ---
-## 3.依赖环境
-### 硬件设备
-|硬件|型号|参数|
+## 3.Environment
+### Hardware
+|Hardware|Model|Specs|
 |---|---|---|
 |运算平台|Jetson Nano/Intel NUC|B01|
-|相机|大恒相机MER-050-560U3C|分辨率640*480 自动曝光3000~5000μs|
-|镜头|M0814-MP2|焦距8mm 光圈值4|
-### 软件设备
+|Camera|大恒相机MER-050-560U3C|分辨率640*480 自动曝光3000~5000μs|
+|Lens|M0814-MP2|焦距8mm 光圈值4|
+### Software
 |软件类型|型号|
 |---|---|
 |OS|Ubuntu 18.04/Windows 10|
