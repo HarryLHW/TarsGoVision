@@ -1,39 +1,40 @@
-# 吉林大学TARS-GO战队装甲板识别代码TarsGoVision
+# Jilin University TARS-GO team armor identification code TarsGoVision
 ---
 
-## 致谢  
-首先在开头感谢东南大学2018年开源代码以及深圳大学、上海交大2019年开源代码对本套代码的完成提供的巨大帮助，希望这套代码也能够帮助其他队伍在 RM 这个舞台上得到更大的提升。
+## Acknowledgement  
+First of all, I would like to say thank you to Southeast University's open-source code in 2018 and Shenzhen University and Shanghai Jiaotong University's open-source code in 2019 for their great help in the completion of this set of codes. I hope this set of codes can also help other teams to achieve greater improvement on the stage of RM.
 
 ---
-## 介绍  
-本代码是吉林大学TARS-GO战队Robomaster2020赛季步兵装甲板识别算法（全平台兼容版本），包含并优化了本战队机器人视觉算法（JLURoboVision）的**相机驱动**、**装甲板识别**、**角度解算**三大主要模块。
+## Abstraction  
+This code is the Robomaster 2020 infantry armor recognition algorithm of Jilin University TARS-GO team (full platform compatible version). It contains and optimizes robot vision algorithm from JLURoboVision in three main modules: **camera driver**, **armor recognition** and **angle solver**.
 
 ---
-## 主要特性
-1. 大幅优化了大恒相机驱动GxCamera，增强了代码封装性及可移植性，重新组织了代码格式，增强可读性及拓展性。
-2. 更改了使用的多线程库，由pthread更改为c++11标准的Thread库，突破原先只能在linux系统下运行的限制，实现全平台运行。
+## Main Features
+1. Greatly optimized the Daheng camera driver GxCamera, enhanced code encapsulation and portability, reorganized the code format, and enhanced readability and expandability.
+2. Changes on multi-thread library was made from pthread to the c++11 standard Thread library. Breaking the original limitation that it could only run under the Linux system, and thus realizing operation on full platform.
 
 ---
-## 目录
-* [1. 功能介绍](#1功能介绍)
-* [2. 效果展示](#2效果展示)
-* [3. 依赖环境](#3依赖环境)
-* [4. 配置与调试](#4配置与调试)
+## Content
+* [1. Functions](#1Functions)
+* [2. Performance](#2Performance)
+* [3. Environment](#3Environment)
+* [4. Configuration and Debugging](#4Configuration and Debugging)
 * [5. 整体框架](#5整体框架)
 * [6. 实现方案](#6实现方案)
 * [7. 总结展望](#7总结展望)
 ---
-## 1.功能介绍
-|模块     |功能     |
+## 1.Functions                                                                                 
+|Module       |Function     |
 | ------- | ------ |
-|相机驱动| 大恒相机SDK封装，实现相机参数控制及图像采集 |
-|装甲板识别| 检测敌方机器人装甲板位置信息并识别其数字 |
-|角度解算| 根据上述位置信息解算目标相对枪管的yaw、pitch角度及距离 |
+|Camera driver| Package of Daheng Camera SDK is to realize camera parameter control and image acquisition |
+|Armor recognition| Detect the position of the enemy robot's armor and identify its number |
+|Angle solver| Calculate the yaw, pitch angle and distance of the target relative to the barrel according to position information above |
 ---
-## 2.效果展示
-### 装甲板识别
-装甲板识别采用基于OpenCV的传统算法实现装甲板位置检测，同时采用SVM实现装甲板数字识别。  
-考虑战场实际情况，机器人可打击有效范围在1m~7m之间，在此范围内，本套算法**装甲板识别率达98%**，识别得到装甲板在图像中四个顶点、中心点的坐标信息。  
+## 2.Performance
+### Armor Recognition
+Armor recognition adopts the traditional algorithm based on OpenCV to realize the position detection of armor. Meanwhile, SVM is adopted to realize the digital recognition of the armor.
+Considering the actual situation of the battlefield, the effective range that the robot can strike is between 1m and 7m. Within this range, the armor recognition rate of this algorithm is 98%, and the coordinate of the four vertices and center points of the armor in the image can be obtained.
+
 <div align=center>**EnemyColor = BLUE; TargetNum = 1**</div>  
 
 <div align=center>
@@ -46,33 +47,34 @@
 <img src="https://gitee.com/qunshanhe/JLURoboVision/raw/master/Assets/R.png" width = "600" alt="图2.2 装甲板识别"/>
 </div>  
 
-在640\*480图像分辨率下，**装甲板识别帧率可达340fps左右，引入ROI之后可达420fps**。但考虑到识别帧率对于电控机械延迟的饱和，取消引入ROI操作，以此避免引入ROI之后无法及时探测全局视野情况的问题，加快机器人自瞄响应。  
-<div align=center>**640\*480（峰值可达340FPS）**</div>  
+At 640\*480 image resolution, **the frame rate of armor recognition can reach about 340fps**, and it can reach 420fps after the introduction of ROI. However, considering the saturation of the recognition frame rate to the electronic control mechanical delay, the introduction of ROI operation is cancelled. This is because the whole view of camera cannot be detected in time after the introduction of ROI. Thus, without ROI, the robot will have higher response on auto aiming.
+
+<div align=center>**640\*480 (Maximum 340FPS)**</div>  
 <div align=center>
-<img src="https://gitee.com/qunshanhe/JLURoboVision/raw/master/Assets/armor640480.gif" width = "600" alt="图2.3 装甲板实时识别帧率"/>
+<img src="https://gitee.com/qunshanhe/JLURoboVision/raw/master/Assets/armor640480.gif" width = "600" alt="Image 2.3 Armor recognition real-time FPS"/>
 </div>  
 
 
-<div align=center>**320\*240（峰值可达1400FPS）**</div>  
+<div align=center>**320\*240 (Maximum 1400FPS)**</div>  
 <div align=center>
-<img src="https://gitee.com/qunshanhe/JLURoboVision/raw/master/Assets/armor320240.gif" width = "600" alt="图2.4 装甲板实时识别帧率"/>
+<img src="https://gitee.com/qunshanhe/JLURoboVision/raw/master/Assets/armor320240.gif" width = "600" alt="Image 2.4 Armor recognition real-time FPS"/>
 </div>
 
+Digital recognition adopts SVM. The binarized armor image is cropped and projected based on armor’s position information, and then recognized in well-trained SVM model. **The accuracy of digital recognition can reach 98%.**
 
-装甲板数字识别采用SVM，通过装甲板位置信息裁剪二值化后的装甲板图像并透射变换，投入训练好的SVM模型中识别，**数字识别准确率可达98%**。  
 <div align=center>
-<img src="https://gitee.com/qunshanhe/JLURoboVision/raw/master/Assets/RealtimeArmor.gif" width = "600" alt="图2.5 装甲板数字识别"/>
+<img src="https://gitee.com/qunshanhe/JLURoboVision/raw/master/Assets/RealtimeArmor.gif" width = "600" alt="Image 2.5 Armor number recognition"/>
 </div>
 
-### 角度解算  
-角度解算方面使用了两种解算方法分距离挡位运行。第一档使用P4P算法，第二档使用小孔成像原理的PinHole算法。  
-此外还引入了相机-枪口的Y轴距离补偿及重力补偿。  
-使用标定板测试，角度解算计算的距离误差在10%以内，角度基本与实际吻合。  
+### Angle solver  
+Two types of calculation methods are used based on different distance. The first type uses the P4P algorithm, and the second type uses the PinHole algorithm based on the principle of small hole imaging. In addition, distance compensation from camera to muzzle on Y-axis and gravity compensation are also introduced to calculate the angle.
+Testing by calibration board, the distance error calculated by the angle solver is within 10%, and the angle is basically consistent with the actual situation.
+
 <div align=center>
-<img src="https://gitee.com/qunshanhe/JLURoboVision/raw/master/Assets/pos.jpg" width = "600" alt="图2.7 角度解算测试图"/>
+<img src="https://gitee.com/qunshanhe/JLURoboVision/raw/master/Assets/pos.jpg" width = "600" alt="Image 2.7 Angle solver test"/>
 </div>
 <div align=center>
-<img src="https://gitee.com/qunshanhe/JLURoboVision/raw/master/Assets/angle_solver.gif" width = "600" alt="图2.7 角度解算测试图"/>
+<img src="https://gitee.com/qunshanhe/JLURoboVision/raw/master/Assets/angle_solver.gif" width = "600" alt="Image 2.7 Angle solver test"/>
 </div>
 
 ---
@@ -302,12 +304,12 @@ $$ \tan pitch = \frac{X}{Z} = \frac{x_{screen} - c_x}{f_x} $$
 $$ \tan yaw = \frac{Y}{Z} = \frac{y_{screen} - c_y}{f_y} $$
 
 ---
-## 7.总结展望
-### 总结  
+## 7.Conclusion and Future Work
+### Conclusion
 本套代码主要实现了装甲板识别及大风车的识别这两个模块，结合角度解算模块对识别到的目标信息的解算，获取云台枪口控制转角，随后通过串口传输给下位机。  
 装甲板识别与大风车识别模块性能表现不错，识别率和帧率满足比赛需求；角度解算模块经过设计，提升了准确性及鲁棒性。    
 同时，代码整体经过封装，具有较强的可移植性。  
-### 特色功能  
+### Features
 1. 丰富的调试接口及数据可视化  
 代码配备了多个调试用函数，能将代码运行效果及计算参数通过图片或终端实时显示，便于代码调试优化。  
 2. 深入底层的图像处理  
@@ -368,7 +370,7 @@ bool armorCompare(const ArmorBox & a_armor, const ArmorBox & b_armor, const Armo
 ```  
 4. 角度解算具有两个计算模型分档运行  
 
-### 展望  
+### Future Works
 1. 卡尔曼滤波预测
 2. 计算平台性能提升
 3. 代码开机自启动
